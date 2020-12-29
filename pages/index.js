@@ -1,65 +1,53 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Box, Heading, Text, Flex, Input, Button } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 export default function Home() {
+  const { handleSubmit, register } = useForm();
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Box h="100vh" bg="gray.100">
+      <Flex w="full" align="center" flexDir="column" p="2rem">
+        <Heading size="2xl">Simple Search</Heading>
+        <Text color="gray.500" fontWeight="bold" mt="1rem">
+          This is a simple example on how to use NextJs's <br /> API routes to
+          create a simple search component <br /> using Sonic, an open-source
+          tool.
+        </Text>
+      </Flex>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <Flex w="full" justify="center">
+        <Input
+          placeholder="Search for..."
+          w="50%"
+          bg="white"
+          ref={register}
+          name="book"
+        />
+        <Button color="white" bg="blue.500" _hover={{ bg: "blue.400" }} mx={4}>
+          Search
+        </Button>
+      </Flex>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+      <Flex w="full" align="center" justify="center" flexDir="column"></Flex>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Link href="/create">
+        <Button
+          w="40px"
+          h="40px"
+          fontSize="22px"
+          bg="blue.500"
+          color="white"
+          rounded="50%"
+          _hover={{ bg: "blue.400" }}
+          pos="fixed"
+          bottom={0}
+          right={0}
+          m={8}
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+          +
+        </Button>
+      </Link>
+    </Box>
+  );
 }
