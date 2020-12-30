@@ -1,9 +1,25 @@
 import { Box, Heading, Text, Flex, Input, Button } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { data } from "../data";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 
 export default function Home() {
-  const { handleSubmit, register } = useForm();
+  const [books, setBooks] = useState(data);
+  const [suggestions, setSuggestions] = useState([]);
+
+  const { handleSubmit, register, errors } = useForm();
+
+  const suggestWords = async (data) => {
+    try {
+      const res = await fetch(`/api/suggest?word=${data.q}`);
+
+      const results = await res.json();
+
+      setSuggestions(results);
+    } catch (err) {
+      console.log("Error");
+    }
+  };
 
   return (
     <Box h="100vh" bg="gray.100">
@@ -21,8 +37,9 @@ export default function Home() {
           placeholder="Search for..."
           w="50%"
           bg="white"
+          name="q"
           ref={register}
-          name="book"
+          onChange={handleSubmit(suggestWords)}
         />
         <Button color="white" bg="blue.500" _hover={{ bg: "blue.400" }} mx={4}>
           Search
@@ -30,24 +47,6 @@ export default function Home() {
       </Flex>
 
       <Flex w="full" align="center" justify="center" flexDir="column"></Flex>
-
-      <Link href="/create">
-        <Button
-          w="40px"
-          h="40px"
-          fontSize="22px"
-          bg="blue.500"
-          color="white"
-          rounded="50%"
-          _hover={{ bg: "blue.400" }}
-          pos="fixed"
-          bottom={0}
-          right={0}
-          m={8}
-        >
-          +
-        </Button>
-      </Link>
     </Box>
   );
 }
